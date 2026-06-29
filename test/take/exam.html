@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mock Exam — Page 1</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+           margin: 0; background: #f4f6fb; color: #1a1c22; }
+    header { background: #1a73e8; color: #fff; padding: 18px 28px; }
+    header h1 { margin: 0; font-size: 20px; }
+    header p { margin: 4px 0 0; opacity: .9; font-size: 13px; }
+    main { max-width: 760px; margin: 24px auto; padding: 0 20px 60px; }
+    .card { background: #fff; border: 1px solid #e3e7ef; border-radius: 12px;
+            padding: 20px 22px; margin-bottom: 18px; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+    h2 { font-size: 16px; margin: 0 0 10px; }
+    p, li { line-height: 1.55; font-size: 14px; }
+    textarea { width: 100%; min-height: 90px; padding: 10px; border: 1px solid #cfd5e2;
+               border-radius: 8px; font-size: 14px; font-family: inherit; }
+    .btn { display: inline-block; background: #1a73e8; color: #fff; border: 0;
+           border-radius: 8px; padding: 10px 16px; font-size: 14px; cursor: pointer;
+           text-decoration: none; margin: 6px 8px 0 0; }
+    .btn.secondary { background: #5f6477; }
+    .btn:hover { filter: brightness(1.08); }
+    .hint { font-size: 12px; color: #6b7180; margin-top: 6px; }
+    kbd { background: #eceff5; border: 1px solid #cfd5e2; border-bottom-width: 2px;
+          border-radius: 4px; padding: 1px 6px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mock Exam — Page 1</h1>
+    <p>This is a test page for the Exam Proctor extension. Proctoring should auto-start here.</p>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>1. Fullscreen gate</h2>
+      <p>When this page loaded out of fullscreen, the extension should have shown a
+         <strong>blocking “Fullscreen required” overlay</strong>. Click its button to enter
+         fullscreen and begin.</p>
+      <button class="btn" onclick="document.documentElement.requestFullscreen()">Enter fullscreen</button>
+      <button class="btn secondary" onclick="document.exitFullscreen && document.exitFullscreen()">
+        Simulate fullscreen exit (strike)
+      </button>
+      <p class="hint">You can also press <kbd>Esc</kbd> to exit fullscreen. Each exit is one strike.</p>
+    </div>
+
+    <div class="card">
+      <h2>2. Clipboard &amp; shortcut blocking</h2>
+      <p>Try to copy this text, right-click, or press <kbd>Ctrl</kbd>+<kbd>P</kbd> /
+         <kbd>Ctrl</kbd>+<kbd>S</kbd> / <kbd>Ctrl</kbd>+<kbd>U</kbd> / <kbd>F12</kbd>.
+         Each should be blocked and logged.</p>
+      <textarea placeholder="Try typing, pasting, or right-clicking here…"></textarea>
+    </div>
+
+    <div class="card">
+      <h2>3. Tab / window / navigation</h2>
+      <p>Each of these should be recorded as a violation (counts toward the 3-strike limit):</p>
+      <ul>
+        <li>Open Page 2 in a <strong>new tab</strong> → “New tab” + “Tab switch”.</li>
+        <li>Click another application / minimise → “Window blur”.</li>
+        <li>Navigate to Page 2 in <strong>this</strong> tab → leaves the exam URL → session ends.</li>
+      </ul>
+      <a class="btn" href="../page2.html" target="_blank" rel="noopener">Open Page 2 (new tab)</a>
+      <a class="btn secondary" href="../page2.html">Go to Page 2 (this tab — ends exam)</a>
+    </div>
+
+    <div class="card">
+      <h2>4. Strike escalation</h2>
+      <p>Trigger violations and watch the on-page warning escalate:</p>
+      <ul>
+        <li><strong>1st</strong> violation → red banner that auto-hides after ~5 seconds.</li>
+        <li><strong>2nd</strong> violation → darker banner that stays until you click it.</li>
+        <li><strong>3rd</strong> violation → blocking “Exam ended” overlay + the session stops.</li>
+      </ul>
+      <p class="hint">A JSON log is auto-saved to <code>Downloads/exam-proctor-reports/</code> and
+         rewritten on every event.</p>
+    </div>
+  </main>
+</body>
+</html>

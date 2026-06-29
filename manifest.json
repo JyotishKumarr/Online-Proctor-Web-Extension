@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Exam Proctor",
+  "version": "1.0.0",
+  "description": "Online exam proctoring — auto-starts on the exam site and monitors fullscreen exit, tab switches, window focus, copy/paste and other suspicious activity.",
+  "permissions": ["tabs", "storage", "notifications", "downloads"],
+  "host_permissions": ["https://exams.myschool.com/*", "http://localhost:8000/*"],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [{
+    "matches": ["https://exams.myschool.com/take/*", "http://localhost:8000/take/*"],
+    "js": ["violation-logger.js", "warning-overlay.js", "content.js"],
+    "run_at": "document_start"
+  }],
+  "icons": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" }
+}
